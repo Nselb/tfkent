@@ -47,18 +47,20 @@ function Home() {
                 const matchesResult = await fetch(`https://${routingRegion}.api.riotgames.com/tft/match/v1/matches/by-puuid/${summonerData.puuid}/ids?start=0&count=20&api_key=${apiKey}`)
                 const matches = await matchesResult.json()
                 localStorage.setItem('Matches', JSON.stringify(matches))
+                var cosos = []
                 matches.map(async m => {
                     const matchDataResult = await fetch(`https://${routingRegion}.api.riotgames.com/tft/match/v1/matches/${m}?api_key=${apiKey}`)
                     const matchData = await matchDataResult.json()
                     matchData.info.participants.map(p => {
                         if (p.puuid === summonerData.puuid) {
-                            const newData = [...matchesData]
+                            const newData = [...cosos]
                             newData.push({ matchId: m, data: p })
-                            setMatchesData(newData)
+                            cosos = newData
                         }
                     })
-                    console.log(matchesData)
                 })
+                setMatchesData(cosos)
+                console.log(matchesData)
             }
         }
 
