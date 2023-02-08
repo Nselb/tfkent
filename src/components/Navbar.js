@@ -6,6 +6,7 @@ function Navbar() {
     const [region, setRegion] = useState("")
 
     const handleClick = () => {
+        localStorage.clear()
         localStorage.setItem('SummonerName', summonerName)
         localStorage.setItem('Region', region ? region : 'la1')
         window.location.reload()
